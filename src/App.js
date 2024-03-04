@@ -1,17 +1,4 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
 
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 
 import { useState, useEffect, useMemo } from "react";
 
@@ -47,6 +34,8 @@ import { useSoftUIController, setMiniSidenav, setOpenConfigurator } from "contex
 
 // Images
 import brand from "assets/images/logo-ct.png";
+import { useSelector } from "react-redux";
+// import { useHistory } from "react-router-dom";
 
 export default function App() {
   const [controller, dispatch] = useSoftUIController();
@@ -54,6 +43,8 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+  const userToken = useSelector(state => state.token);
+  // const history = useHistory();
 
   // Cache for the rtl
   useMemo(() => {
@@ -101,7 +92,7 @@ export default function App() {
         return getRoutes(route.collapse);
       }
 
-      if (route.route) {
+      if (route.route )  {
         return <Route exact path={route.route} element={route.component} key={route.key} />;
       }
 
