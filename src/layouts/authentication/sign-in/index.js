@@ -1,22 +1,7 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Switch from "@mui/material/Switch";
@@ -32,11 +17,30 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
 import curved9 from "assets/images/curved-images/curved-6.jpg";
+import axios from "axios";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
+  const [user, setUser] = useState(true);
+  const navigate = useNavigate();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+
+  const handleSetUser = (e) =>
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+
+  async function signIn() {
+    const response = await axios.post("http://localhost:8080/pulic/auth/login", user);
+    if (response.status === 200) {
+      localStorage.setItem("token", response.data.token);
+      navigate("/profile");
+      console.log(response.data);
+    }
+    console.log(response);
+  }
 
   return (
     <CoverLayout
@@ -51,7 +55,12 @@ function SignIn() {
               Email
             </SoftTypography>
           </SoftBox>
-          <SoftInput type="email" placeholder="Email" />
+          <SoftInput
+            type="email"
+            placeholder="Email"
+            name="email"
+            onChange={(e) => handleSetUser(e)}
+          />
         </SoftBox>
         <SoftBox mb={2}>
           <SoftBox mb={1} ml={0.5}>
@@ -59,7 +68,12 @@ function SignIn() {
               Password
             </SoftTypography>
           </SoftBox>
-          <SoftInput type="password" placeholder="Password" />
+          <SoftInput
+            type="password"
+            placeholder="Password"
+            name="password"
+            onChange={(e) => handleSetUser(e)}
+          />
         </SoftBox>
         <SoftBox display="flex" alignItems="center">
           <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -73,7 +87,7 @@ function SignIn() {
           </SoftTypography>
         </SoftBox>
         <SoftBox mt={4} mb={1}>
-          <SoftButton variant="gradient" color="info" fullWidth>
+          <SoftButton variant="gradient" color="info" fullWidth onClick={() => signIn()}>
             sign in
           </SoftButton>
         </SoftBox>

@@ -1,22 +1,7 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 // @mui material components
 import Card from "@mui/material/Card";
@@ -35,11 +20,29 @@ import Separator from "layouts/authentication/components/Separator";
 
 // Images
 import curved6 from "assets/images/curved-images/curved14.jpg";
+import axios from "axios";
 
 function SignUp() {
   const [agreement, setAgremment] = useState(true);
+  const [user, setUser] = useState(true);
+  const navigate = useNavigate();
 
   const handleSetAgremment = () => setAgremment(!agreement);
+
+  const handleSetUser = (e) =>
+    setUser({
+      ...user,
+      [e.target.name]: e.target.value,
+    });
+
+  async function signUp() {
+    const response = await axios.post("http://localhost:8080/pulic/auth/register", user);
+    if (response.status === 201) {
+      navigate("/authentication/sign-in");
+      console.log(response.data);
+    }
+    console.log(response);
+  }
 
   return (
     <BasicLayout
@@ -60,13 +63,23 @@ function SignUp() {
         <SoftBox pt={2} pb={3} px={3}>
           <SoftBox component="form" role="form">
             <SoftBox mb={2}>
-              <SoftInput placeholder="Name" />
+              <SoftInput placeholder="Name" name="name" onChange={(e) => handleSetUser(e)} />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="email" placeholder="Email" />
+              <SoftInput
+                type="email"
+                placeholder="Email"
+                name="email"
+                onChange={(e) => handleSetUser(e)}
+              />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="password" placeholder="Password" />
+              <SoftInput
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={(e) => handleSetUser(e)}
+              />
             </SoftBox>
             <SoftBox display="flex" alignItems="center">
               <Checkbox checked={agreement} onChange={handleSetAgremment} />
@@ -89,7 +102,7 @@ function SignUp() {
               </SoftTypography>
             </SoftBox>
             <SoftBox mt={4} mb={1}>
-              <SoftButton variant="gradient" color="dark" fullWidth>
+              <SoftButton variant="gradient" color="dark" fullWidth onClick={() => signUp()}>
                 sign up
               </SoftButton>
             </SoftBox>
