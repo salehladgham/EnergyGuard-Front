@@ -37,9 +37,7 @@ function SignIn() {
     if (response.status === 200) {
       localStorage.setItem("token", response.data.token);
       navigate("/profile");
-      console.log(response.data);
     }
-    console.log(response);
   }
 
   return (

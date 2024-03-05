@@ -39,9 +39,7 @@ function SignUp() {
     const response = await axios.post("http://localhost:8080/pulic/auth/register", user);
     if (response.status === 201) {
       navigate("/authentication/sign-in");
-      console.log(response.data);
     }
-    console.log(response);
   }
 
   return (
