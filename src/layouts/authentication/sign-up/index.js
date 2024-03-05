@@ -8,7 +8,7 @@ import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
 
 
-// Soft UI Dashboard React components
+
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 import SoftInput from "components/SoftInput";
@@ -23,6 +23,8 @@ import Separator from "layouts/authentication/components/Separator";
 import curved6 from "assets/images/curved-images/curved14.jpg";
 import { register } from '../../../actions/authActions'; 
 import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+
 
 
 // ...Other imports
@@ -37,13 +39,16 @@ function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState(""); 
+  const navigateTo = useNavigate();
   const rolesEnum = ['Administrator', 'Energy Manager', 'Operator'];
+  
+
   const handleSubmit = async (event) => {
     event.preventDefault(); 
     try {
      
         
-      await dispatch(register({ username, password, role }));
+      await dispatch(register({ username, password, role, navigateTo }));
       console.log("User created successfully");
       
     } catch (error) {

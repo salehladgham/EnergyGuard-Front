@@ -1,9 +1,11 @@
 import * as api from '../api/authApi';
 
-export const register = ({ username, password, role }) => async (dispatch) => {
+export const register = ({ username, password, role, navigateTo }) => async (dispatch) => {
   try {
     const data = await api.registerUser({ username, password, role });
     dispatch({ type: 'REGISTER_SUCCESS', payload: data });
+    navigateTo('/dashboard')
+
   } catch (error) {
     dispatch({ type: 'REGISTER_FAILURE', payload: error });
   }
