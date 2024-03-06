@@ -37,7 +37,6 @@ function CoverLayout({ color, header, title, description, image, top, children }
         action={{
           type: "external",
           route: "https://creative-tim.com/product/soft-ui-dashboard-react",
-          label: "free download",
           color: "dark",
         }}
       />

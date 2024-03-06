@@ -21,7 +21,7 @@ import axios from "axios";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
-  const [user, setUser] = useState(true);
+  const [user, setUser] = useState(false);
   const navigate = useNavigate();
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
@@ -33,7 +33,7 @@ function SignIn() {
     });
 
   async function signIn() {
-    const response = await axios.post("http://localhost:8080/pulic/auth/login", user);
+    const response = await axios.post("http://localhost:8088/pulic/auth/login", user);
     if (response.status === 200) {
       localStorage.setItem("token", response.data.token);
       navigate("/profile");
@@ -85,7 +85,13 @@ function SignIn() {
           </SoftTypography>
         </SoftBox>
         <SoftBox mt={4} mb={1}>
-          <SoftButton variant="gradient" color="info" fullWidth onClick={() => signIn()}>
+          <SoftButton
+            variant="gradient"
+            color="info"
+            fullWidth
+            onClick={() => signIn()}
+            disabled={!user}
+          >
             sign in
           </SoftButton>
         </SoftBox>
