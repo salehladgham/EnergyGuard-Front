@@ -1,32 +1,35 @@
-// @mui material components
-import Grid from "@mui/material/Grid";
-
-// Soft UI Dashboard React components
-import SoftBox from "components/SoftBox";
-
-// Soft UI Dashboard React examples
+import React, { useState } from "react";
+import { Card, Grid } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-
-// Billing page components
-import { Card } from "@mui/material";
-
-import axios from "axios";
-import { useState } from "react";
-
+import SoftBox from "components/SoftBox";
 import SoftInput from "components/SoftInput";
 import SoftButton from "components/SoftButton";
-import { useNavigate } from "react-router-dom";
 
 function CreateAirEntretien() {
-  const [air, setAir] = useState(true);
+  const [air, setAir] = useState({
+    equipementair: "",
+    superviseur: "",
+    date_entretien: "",
+    dateperiodesecheur: "",
+    nbrhprochain: 0,
+    hfonctionnement: 0,
+    remarque: "",
+    niveauprobleme: "",
+    dateajout: "",
+    datemodif: "",
+    datesuppression: "",
+    suppression: false,
+  });
   const navigate = useNavigate();
 
   const handleSetAir = (e) =>
     setAir({
       ...air,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
 
   async function create() {
@@ -43,68 +46,73 @@ function CreateAirEntretien() {
         <SoftBox mb={3}>
           <Card>
             <SoftBox pt={2} pb={3} px={3}>
-              <SoftBox component="form" role="form">
-                <SoftBox mb={2}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="date_entretien"
+                    label="Equipment Air"
+                    name="equipementair"
+                    onChange={(event) => handleSetAir(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Superviseur"
+                    name="superviseur"
+                    onChange={(event) => handleSetAir(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Date Entretien"
                     name="date_entretien"
                     type="date"
-                    onChange={(event) => {
-                      handleSetAir(event);
-                    }}
+                    onChange={(event) => handleSetAir(event)}
                   />
-                </SoftBox>
-                <SoftBox mb={2}>
+                </Grid>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="dateperiodesecheur"
+                    label="Date Periode Secheur"
                     name="dateperiodesecheur"
                     type="date"
-                    onChange={(event) => {
-                      handleSetAir(event);
-                    }}
+                    onChange={(event) => handleSetAir(event)}
                   />
-                </SoftBox>
-                <SoftBox mb={2}>
+                </Grid>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="remarque"
-                    name="remarque"
-                    type="text"
-                    onChange={(event) => {
-                      handleSetAir(event);
-                    }}
-                  />
-                </SoftBox>
-                <SoftBox mb={2}>
-                  <SoftInput
-                    placeholder="niveauprobleme"
-                    name="niveauprobleme"
-                    onChange={(event) => {
-                      handleSetAir(event);
-                    }}
-                  />
-                </SoftBox>
-                <SoftBox mb={2}>
-                  <SoftInput
-                    placeholder="nbrhprochain"
+                    label="Nombre Heures Prochain"
                     name="nbrhprochain"
-                    onChange={(event) => {
-                      handleSetAir(event);
-                    }}
+                    type="number"
+                    onChange={(event) => handleSetAir(event)}
                   />
-                </SoftBox>
-                <SoftBox mb={2}>
+                </Grid>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="hfonctionnement"
+                    label="Heures Fonctionnement"
                     name="hfonctionnement"
-                    onChange={(event) => {
-                      handleSetAir(event);
-                    }}
+                    type="number"
+                    onChange={(event) => handleSetAir(event)}
                   />
-                </SoftBox>
-              </SoftBox>
+                </Grid>
+                <Grid item xs={12}>
+                  <SoftInput
+                    label="Remarque"
+                    name="remarque"
+                    multiline
+                    rows={4}
+                    onChange={(event) => handleSetAir(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Niveau Problème"
+                    name="niveauprobleme"
+                    onChange={(event) => handleSetAir(event)}
+                  />
+                </Grid>
+              </Grid>
             </SoftBox>
-            <SoftBox mt={1} mb={1} ml={120} align-self="end">
-              <SoftButton variant="gradient" color="dark" onClick={() => create()}>
+            <SoftBox mt={1} mb={1} ml={120} alignSelf="end">
+              <SoftButton variant="gradient" color="dark" onClick={create}>
                 Create
               </SoftButton>
             </SoftBox>

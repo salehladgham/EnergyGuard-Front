@@ -1,38 +1,55 @@
-// @mui material components
-import Grid from "@mui/material/Grid";
-
-// Soft UI Dashboard React components
-import SoftBox from "components/SoftBox";
-
-// Soft UI Dashboard React examples
+import React, { useState } from "react";
+import { Card, Grid } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
-
-// Billing page components
-import { Card } from "@mui/material";
-
-import axios from "axios";
-import { useState } from "react";
-
+import SoftBox from "components/SoftBox";
 import SoftInput from "components/SoftInput";
 import SoftButton from "components/SoftButton";
-import { useNavigate } from "react-router-dom";
 
 function CreateAirEquipment() {
-  const [equipment, setEquipment] = useState(true);
+  const [equipment, setEquipment] = useState({
+    marque: "",
+    modele: "",
+    nom: "",
+    puissance_max: 0,
+    debit: 0,
+    puissancemoteur: 0,
+    nserie: 0,
+    pressioncharge: 0,
+    pressiondecharge: 0,
+    anneefabrication: 0,
+    type: "",
+    alertentretien: "",
+    dossier: "",
+    adresseip: "",
+    equipementair: "",
+    superviseur: "",
+    date_entretien: "",
+    dateperiodesecheur: "",
+    nbrhprochain: 0,
+    hfonctionnement: 0,
+    remarque: "",
+    niveauprobleme: "",
+    dateajout: "",
+    datemodif: "",
+    datesuppression: "",
+    suppression: false,
+  });
   const navigate = useNavigate();
 
-  const handleSetequipment = (e) =>
+  const handleSetEquipment = (e) =>
     setEquipment({
       ...equipment,
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
 
   async function create() {
     const response = await axios.post("http://localhost:8080/api/air-equipment/", equipment);
     if (response.status === 201) {
-      navigate("/equipment-entretien/");
+      navigate("/air-equipment/");
     }
   }
 
@@ -43,68 +60,176 @@ function CreateAirEquipment() {
         <SoftBox mb={3}>
           <Card>
             <SoftBox pt={2} pb={3} px={3}>
-              <SoftBox component="form" role="form">
-                <SoftBox mb={2}>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="date_entretien"
+                    label="Marque"
+                    name="marque"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Modèle"
+                    name="modele"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Nom"
+                    name="nom"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Puissance Max"
+                    name="puissance_max"
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Débit"
+                    name="debit"
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Puissance Moteur"
+                    name="puissancemoteur"
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Numéro de Série"
+                    name="nserie"
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Pression de Charge"
+                    name="pressioncharge"
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Pression de Décharge"
+                    name="pressiondecharge"
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Année de Fabrication"
+                    name="anneefabrication"
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Type"
+                    name="type"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Alerte Entretien"
+                    name="alertentretien"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Dossier"
+                    name="dossier"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Adresse IP"
+                    name="adresseip"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Equipement Air"
+                    name="equipementair"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Superviseur"
+                    name="superviseur"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Date Entretien"
                     name="date_entretien"
                     type="date"
-                    onChange={(event) => {
-                      handleSetequipment(event);
-                    }}
+                    onChange={(event) => handleSetEquipment(event)}
                   />
-                </SoftBox>
-                <SoftBox mb={2}>
+                </Grid>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="dateperiodesecheur"
+                    label="Date Période Sécheur"
                     name="dateperiodesecheur"
                     type="date"
-                    onChange={(event) => {
-                      handleSetequipment(event);
-                    }}
+                    onChange={(event) => handleSetEquipment(event)}
                   />
-                </SoftBox>
-                <SoftBox mb={2}>
+                </Grid>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="remarque"
-                    name="remarque"
-                    type="text"
-                    onChange={(event) => {
-                      handleSetequipment(event);
-                    }}
-                  />
-                </SoftBox>
-                <SoftBox mb={2}>
-                  <SoftInput
-                    placeholder="niveauprobleme"
-                    name="niveauprobleme"
-                    onChange={(event) => {
-                      handleSetequipment(event);
-                    }}
-                  />
-                </SoftBox>
-                <SoftBox mb={2}>
-                  <SoftInput
-                    placeholder="nbrhprochain"
+                    label="Nombre d'Heures Prochain"
                     name="nbrhprochain"
-                    onChange={(event) => {
-                      handleSetequipment(event);
-                    }}
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
                   />
-                </SoftBox>
-                <SoftBox mb={2}>
+                </Grid>
+                <Grid item xs={6}>
                   <SoftInput
-                    placeholder="hfonctionnement"
+                    label="Heures de Fonctionnement"
                     name="hfonctionnement"
-                    onChange={(event) => {
-                      handleSetequipment(event);
-                    }}
+                    type="number"
+                    onChange={(event) => handleSetEquipment(event)}
                   />
-                </SoftBox>
-              </SoftBox>
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Remarque"
+                    name="remarque"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+                  <SoftInput
+                    label="Niveau Problème"
+                    name="niveauprobleme"
+                    onChange={(event) => handleSetEquipment(event)}
+                  />
+                </Grid>
+              </Grid>
             </SoftBox>
-            <SoftBox mt={1} mb={1} ml={120} align-self="end">
-              <SoftButton variant="gradient" color="dark" onClick={() => create()}>
+            <SoftBox mt={1} mb={1} ml={120} alignSelf="end">
+              <SoftButton variant="gradient" color="dark" onClick={create}>
                 Create
               </SoftButton>
             </SoftBox>

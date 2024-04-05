@@ -14,6 +14,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import SoftButton from "components/SoftButton";
 import { Link } from "react-router-dom";
+import MaintenanceHoursChart from "layouts/dashboard/Maintenance";
 
 function AirEntretien() {
   const [airEntretiens, setAirEntretiens] = useState(null);
@@ -71,6 +72,7 @@ function AirEntretien() {
           </Card>
         </SoftBox>
       </SoftBox>
+      <MaintenanceHoursChart data={airEntretiens} />
       <Footer />
     </DashboardLayout>
   );
