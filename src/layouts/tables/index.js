@@ -1,38 +1,65 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
 import Card from "@mui/material/Card";
 
-// Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 import SoftTypography from "components/SoftTypography";
 
-// Soft UI Dashboard React examples
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
+import { Author, Function } from "./data/authorsTableData";
+import team2 from "assets/images/team-2.jpg";
 
-// Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Tables() {
+  const [supervisors, setSupervisors] = useState(null);
+  async function getAllSuperrvisors() {
+    const response = await axios.get("http://localhost:8080/api/superviseur/");
+    if (response.status === 200) {
+      setSupervisors(response.data);
+    }
+  }
+
+  useEffect(async () => {
+    await getAllSuperrvisors();
+  }, []);
+
+  const authorsTableData = {
+    columns: [
+      { name: "author", align: "left" },
+      { name: "function", align: "left" },
+      { name: "phone", align: "center" },
+      { name: "action", align: "center" },
+    ],
+
+    rows: supervisors
+      ? supervisors.map((supervisor) => ({
+          author: <Author image={team2} name={supervisor.nom} email={supervisor.mail} />,
+          function: <Function job={supervisor.poste} org="Organization" />,
+          phone: (
+            <SoftTypography variant="caption" color="secondary" fontWeight="medium">
+              {supervisor.tel}
+            </SoftTypography>
+          ),
+          action: (
+            <SoftTypography
+              component="a"
+              href="#"
+              variant="caption"
+              color="secondary"
+              fontWeight="medium"
+            >
+              Edit
+            </SoftTypography>
+          ),
+        }))
+      : [],
+  };
+
   const { columns, rows } = authorsTableData;
-  const { columns: prCols, rows: prRows } = projectsTableData;
+  // const { columns: prCols, rows: prRows } = projectsTableData;
 
   return (
     <DashboardLayout>
@@ -57,23 +84,6 @@ function Tables() {
             </SoftBox>
           </Card>
         </SoftBox>
-        <Card>
-          <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
-            <SoftTypography variant="h6">Projects table</SoftTypography>
-          </SoftBox>
-          <SoftBox
-            sx={{
-              "& .MuiTableRow-root:not(:last-child)": {
-                "& td": {
-                  borderBottom: ({ borders: { borderWidth, borderColor } }) =>
-                    `${borderWidth[1]} solid ${borderColor}`,
-                },
-              },
-            }}
-          >
-            <Table columns={prCols} rows={prRows} />
-          </SoftBox>
-        </Card>
       </SoftBox>
       <Footer />
     </DashboardLayout>

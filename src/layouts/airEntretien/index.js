@@ -1,21 +1,3 @@
-/**
-=========================================================
-* Soft UI Dashboard React - v4.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard-react
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-// @mui material components
-import Grid from "@mui/material/Grid";
-
 // Soft UI Dashboard React components
 import SoftBox from "components/SoftBox";
 
@@ -36,7 +18,7 @@ import { Link } from "react-router-dom";
 function AirEntretien() {
   const [airEntretiens, setAirEntretiens] = useState(null);
   async function getAllAirEntretiens() {
-    const response = await axios.get("http://localhost:8088/api/air-entretiens/");
+    const response = await axios.get("http://localhost:8080/api/air-entretiens/");
     if (response.status === 200) {
       setAirEntretiens(response.data);
     }
@@ -57,7 +39,7 @@ function AirEntretien() {
   useEffect(async () => {
     await getAllAirEntretiens();
   }, []);
-  console.log(airEntretiens);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -67,7 +49,7 @@ function AirEntretien() {
             <SoftBox display="flex" justifyContent="space-between" alignItems="center" p={3}>
               <SoftTypography variant="h6">AirEntretien</SoftTypography>
               <SoftBox mt={4} mb={1}>
-                <Link to="/air-entretien/create">
+                <Link to="/air-entretien-create">
                   <SoftButton variant="gradient" color="info" fullWidth>
                     Create
                   </SoftButton>

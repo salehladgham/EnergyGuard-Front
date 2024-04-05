@@ -12,6 +12,8 @@ import Document from "examples/Icons/Document";
 import SpaceShip from "examples/Icons/SpaceShip";
 import CustomerSupport from "examples/Icons/CustomerSupport";
 import CreateAirEntretien from "layouts/airEntretien/components/CreateAirEntretien";
+import CreateAirEquipment from "layouts/airEquipment/components/CreateAirEquipment";
+import AirEquipment from "layouts/airEquipment";
 
 const routes = [
   {
@@ -25,7 +27,7 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Tables",
+    name: "Superrvisor",
     key: "tables",
     route: "/tables",
     icon: <Office size="12px" />,
@@ -56,7 +58,6 @@ const routes = [
     name: "Air entretien",
     key: "air-entretien",
     route: "/air-entretien",
-    icon: <Document size="12px" />,
     component: <AirEntretien />,
     noCollapse: true,
   },
@@ -64,10 +65,27 @@ const routes = [
     type: "collapse",
     name: "Create Air entretien",
     key: "air-entretien-create",
-    route: "/air-entretien/create",
+    route: "/air-entretien-create",
     icon: <Document size="12px" />,
     component: <CreateAirEntretien />,
-    noCollapse: false,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Air equipment",
+    key: "air-equipment",
+    route: "/air-equipment",
+    component: <AirEquipment />,
+    noCollapse: true,
+  },
+  {
+    type: "collapse",
+    name: "Create Air equipment",
+    key: "air-equipment-create",
+    route: "air-equipment-create",
+    icon: <Document size="12px" />,
+    component: <CreateAirEquipment />,
+    noCollapse: true,
   },
   {
     type: "collapse",

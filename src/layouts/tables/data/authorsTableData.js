@@ -10,7 +10,7 @@ import team2 from "assets/images/team-2.jpg";
 import team3 from "assets/images/team-3.jpg";
 import team4 from "assets/images/team-4.jpg";
 
-function Author({ image, name, email }) {
+export function Author({ image, name, email }) {
   return (
     <SoftBox display="flex" alignItems="center" px={1} py={0.5}>
       <SoftBox mr={2}>
@@ -28,7 +28,7 @@ function Author({ image, name, email }) {
   );
 }
 
-function Function({ job, org }) {
+export function Function({ job, org }) {
   return (
     <SoftBox display="flex" flexDirection="column">
       <SoftTypography variant="caption" fontWeight="medium" color="text">
@@ -78,7 +78,13 @@ const authorsTableData = {
       author: <Author image={team3} name="Alexa Liras" email="alexa@creative-tim.com" />,
       function: <Function job="Programator" org="Developer" />,
       status: (
-        <SoftBadge variant="gradient" badgeContent="offline" color="secondary" size="xs" container />
+        <SoftBadge
+          variant="gradient"
+          badgeContent="offline"
+          color="secondary"
+          size="xs"
+          container
+        />
       ),
       employed: (
         <SoftTypography variant="caption" color="secondary" fontWeight="medium">
@@ -147,7 +153,13 @@ const authorsTableData = {
       author: <Author image={team2} name="Richard Gran" email="richard@creative-tim.com" />,
       function: <Function job="Manager" org="Executive" />,
       status: (
-        <SoftBadge variant="gradient" badgeContent="offline" color="secondary" size="xs" container />
+        <SoftBadge
+          variant="gradient"
+          badgeContent="offline"
+          color="secondary"
+          size="xs"
+          container
+        />
       ),
       employed: (
         <SoftTypography variant="caption" color="secondary" fontWeight="medium">
@@ -170,7 +182,13 @@ const authorsTableData = {
       author: <Author image={team4} name="Miriam Eric" email="miriam@creative-tim.com" />,
       function: <Function job="Programtor" org="Developer" />,
       status: (
-        <SoftBadge variant="gradient" badgeContent="offline" color="secondary" size="xs" container />
+        <SoftBadge
+          variant="gradient"
+          badgeContent="offline"
+          color="secondary"
+          size="xs"
+          container
+        />
       ),
       employed: (
         <SoftTypography variant="caption" color="secondary" fontWeight="medium">

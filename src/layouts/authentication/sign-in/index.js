@@ -33,7 +33,7 @@ function SignIn() {
     });
 
   async function signIn() {
-    const response = await axios.post("http://localhost:8088/pulic/auth/login", user);
+    const response = await axios.post("http://localhost:8080/pulic/auth/login", user);
     if (response.status === 200) {
       localStorage.setItem("token", response.data.token);
       navigate("/profile");
