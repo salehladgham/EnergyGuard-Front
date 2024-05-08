@@ -38,6 +38,21 @@ function CreateAirEntretien() {
       navigate("/air-entretien/");
     }
   }
+  const [message, setMessage] = useState('');
+  const [botResponse, setBotResponse] = useState('');
+  const [error, setError] = useState('');
+
+  const sendMessage = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/air-entretiens/generatewithchat/${message}`);
+      setBotResponse(response.data.description);
+      setError('');
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du message :', error);
+      setError('Désolé, une erreur s\'est produite lors de l\'envoi du message.');
+      setBotResponse('');
+    }
+  };
 
   return (
     <DashboardLayout>
@@ -45,6 +60,48 @@ function CreateAirEntretien() {
       <SoftBox mt={4}>
         <SoftBox mb={3}>
           <Card>
+        
+          <div>
+          <div style={{  alignItems: 'center', justifyContent: 'center', marginBottom: '3px' }} >
+    <input
+        style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '5px', fontSize: '16px', flex: '1', marginRight: '10px' }}
+        type="text"
+        placeholder="Entrez votre message sur l'air..."
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+    />
+    <button
+        style={{ padding: '10px 20px', backgroundColor: '#007bff', color: '#fff', border: 'none', borderRadius: '5px', fontSize: '16px', cursor: 'pointer', transition: 'background-color 0.3s ease' }}
+        onClick={sendMessage}
+    >
+        Envoyer
+    </button>
+</div>
+{error && (
+    <div style={{ backgroundColor: '#ffdddd', padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
+        <p style={{ color: '#cc0000', fontSize: '16px', margin: '0' }}>{error}</p>
+    </div>
+)}
+{botResponse && (
+    <div style={{ backgroundColor: '#f5f5f5', padding: '12px', borderRadius: '8px', marginBottom: '12px' }}>
+        <p style={{ color: '#333', fontSize: '16px', margin: '0' }}>{botResponse}</p>
+    </div>
+)}
+
+
+
+      {/* <div>
+        <input
+          type="text"
+          placeholder="Entrez votre message sur l'air..."
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+        />
+        <button onClick={sendMessage}>Envoyer</button>
+      </div> */}
+      {/* {error && <p>{error}</p>}
+      {botResponse && <p>{botResponse}</p>} */}
+    </div>
             <SoftBox pt={2} pb={3} px={3}>
               <Grid container spacing={2}>
                 <Grid item xs={6}>
